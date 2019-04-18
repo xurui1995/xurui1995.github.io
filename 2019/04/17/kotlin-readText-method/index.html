@@ -137,9 +137,9 @@
         </div>
         <!-- Post Main Content -->
         <div class="entry-content has_line_number">
-          <a id="more"></a>
-<h3 id="readText-方法介绍"><a href="#readText-方法介绍" class="headerlink" title="readText()方法介绍"></a>readText()方法介绍</h3><p><code>readText()</code>是kotlin为一些IO操作类提供的拓展方法,方便读取IO内容<br>常见使用:</p>
+          <h3 id="readText-方法介绍"><a href="#readText-方法介绍" class="headerlink" title="readText()方法介绍"></a>readText()方法介绍</h3><p><code>readText()</code>是kotlin为一些IO操作类提供的拓展方法,方便读取IO内容<br>常见使用:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val contents = File(&quot;pathname&quot;).readText()</span><br><span class="line">val contents = URL(&quot;url&quot;).readText()</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <p>通过调用<code>readText()</code>可以直接获取文件或URL的内容 </p>
 <h3 id="上述使用方式IO流会自动关闭吗"><a href="#上述使用方式IO流会自动关闭吗" class="headerlink" title="上述使用方式IO流会自动关闭吗?"></a>上述使用方式IO流会自动关闭吗?</h3><p>我们知道无论是File还是URL其实都过IO流去读取读取内容的,那使<code>readText()</code>是否会造成IO流未关闭呢?<br>通过观察源码:<br><img src="/2019/04/17/kotlin-readText-method/readText1.png" alt=""><br>看到这里,我恍然大悟,他们<code>readText()</code>都调用了<code>readBytes()</code>方法,而<code>readBytes()</code>方法拿到Stream后通过调用use扩展函数来完成相关操作,而对use函数,则会对Closeable自动close<br><img src="/2019/04/17/kotlin-readText-method/readText2.png" alt=""><br>所以答案是肯定的,上述的方法IO流会自动关闭</p>
 <h3 id="所有的readText-拓展方法都会关闭IO流吗"><a href="#所有的readText-拓展方法都会关闭IO流吗" class="headerlink" title="所有的readText()拓展方法都会关闭IO流吗?"></a>所有的readText()拓展方法都会关闭IO流吗?</h3><p>首先,我也是偶然发现这个问题的,当我们把代码</p>
