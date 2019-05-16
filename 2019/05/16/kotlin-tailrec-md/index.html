@@ -145,7 +145,7 @@
 <blockquote>
 <p>tailrec marks a function as tail-recursive (allowing the compiler to replace recursion with iteration)</p>
 </blockquote>
-<h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><p>于是我开始了实验， 先编写符合尾递归形式的代码，通过对kotlin代码的字节码DEcompile对比查看是否达到了尾递归的优化。<br><img src="/2019/05/16/kotlin-tailrec-md/tailrec2.png" alt=""><br><img src="/2019/05/16/kotlin-tailrec-md/tailrec3.png" alt=""><br>通过对比，不难发现tailrec的的确确做到了JAVA做不到的事情。</p>
+<h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><p>于是我开始了实验， 先编写符合尾递归形式的代码，通过对kotlin代码的字节码DEcompile对比查看是否达到了尾递归的优化。<br><img src="/2019/05/16/kotlin-tailrec-md/tailrec2.png" alt=""><br><img src="/2019/05/16/kotlin-tailrec-md/tailrec3.png" alt=""><br>通过对比，不难发现<code>tailrec</code>的的确确做到了JAVA做不到的事情。</p>
 
         </div>
       </article>
