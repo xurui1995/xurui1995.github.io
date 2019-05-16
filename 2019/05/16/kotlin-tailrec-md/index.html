@@ -137,15 +137,15 @@
         </div>
         <!-- Post Main Content -->
         <div class="entry-content has_line_number">
-          <p> ### 递归OR循环 当编写一个涉及递归调用的方法时，你是否遇到过这样的烦恼，用递归的话更容易理解整个方法所表达的含义和流程，但是为了去避免出现过多的递归调用导致StackOverFlow，你不得不放弃使用递归，默默地将代码修改为循环的形式。</p>
-<p>那么，有没有可能让我的代码保持递归的形式但是执行的过程却是循环的方式呢，是不是觉得这个想法有点天真，但是Kotlin的使用者是可能有这个运气能实现的。</p>
-<h3 id="tailrec"><a href="#tailrec" class="headerlink" title="tailrec"></a>tailrec</h3><p>一切要从优化<a href="https://github.com/wuseal/JsonToKotlinClass" target="_blank" rel="noopener"><code>JsonToKotlinClass</code></a> 的代码说起，这代码的某个类中，发现了不少的递归调用，如下：<br><img src="/2019/05/16/kotlin-tailrec-md/tailrec1" alt=""></p>
+          <p> </p>
+<h3 id="递归OR循环"><a href="#递归OR循环" class="headerlink" title="递归OR循环"></a>递归OR循环</h3><p>当编写一个涉及递归调用的方法时，你是否遇到过这样的烦恼，用递归的话更容易理解整个方法所表达的含义和流程，但是为了去避免出现过多的递归调用导致StackOverFlow，你不得不放弃使用递归，默默地将代码修改为循环的形式。<br>那么，有没有可能让我的代码保持递归的形式但是执行的过程却是循环的方式呢，是不是觉得这个想法有点天真，但是Kotlin的使用者是可能有这个运气能实现的。</p>
+<h3 id="tailrec"><a href="#tailrec" class="headerlink" title="tailrec"></a>tailrec</h3><p>一切要从优化<a href="https://github.com/wuseal/JsonToKotlinClass" target="_blank" rel="noopener"><code>JsonToKotlinClass</code></a> （开源项目 json -&gt; kotlin data class） 的代码说起，这代码的某个类中，发现了不少的递归调用，如下：<br><img src="/2019/05/16/kotlin-tailrec-md/tailrec1.png" alt=""></p>
 <p>然后突然脑子里飘过三个字”尾递归”，尾递归就是如果一个函数中所有递归形式的调用都出现在函数的末尾，我们称这个递归函数是尾递归的。而尾递归优化就是针对尾递归的情况，通过编译时自动转换成循环去消除递归，从而既保留了代码的递归可读性又解决了栈空间的问题。介于之前我是知道JAVA是不支持尾递归优化的，所以我开始查找Kotlin是否有尾递归的优化。</p>
 <p>很容易在官方文档找到尾递归优化的关键字：<code>tailrec</code> </p>
 <blockquote>
 <p>tailrec marks a function as tail-recursive (allowing the compiler to replace recursion with iteration)</p>
 </blockquote>
-<h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><p>于是我开始了实验， 通过对kotlin代码的字节码DEcompile查看是否达到了尾递归的优化。<br><img src="/2019/05/16/kotlin-tailrec-md/tailrec2" alt=""><br><img src="/2019/05/16/kotlin-tailrec-md/tailrec3" alt=""><br>通过对比，不难发现tailrec的的确确做到了JAVA做不到的事情。</p>
+<h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><p>于是我开始了实验， 先编写符合尾递归形式的代码，通过对kotlin代码的字节码DEcompile对比查看是否达到了尾递归的优化。<br><img src="/2019/05/16/kotlin-tailrec-md/tailrec2.png" alt=""><br><img src="/2019/05/16/kotlin-tailrec-md/tailrec3.png" alt=""><br>通过对比，不难发现tailrec的的确确做到了JAVA做不到的事情。</p>
 
         </div>
       </article>
