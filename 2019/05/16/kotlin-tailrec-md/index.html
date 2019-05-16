@@ -16,7 +16,7 @@
 
   <!--Open Graph Title-->
   
-      <meta property="og:title" content="BMO~BMO!">
+      <meta property="og:title" content="Kotlin Tips(2) 用递归还是循环？也许Kotlin可以给你新的体验">
   
   <!--Open Graph Description-->
   
@@ -24,7 +24,7 @@
   <meta property="og:site_name" content="BMO~BMO!">
   <!--Type page-->
   
-      <meta property="og:type" content="website">
+      <meta property="og:type" content="article">
   
   <!--Page Cover-->
   
@@ -33,7 +33,7 @@
 
   <!-- Title -->
   
-  <title>BMO~BMO!</title>
+  <title>Kotlin Tips(2) 用递归还是循环？也许Kotlin可以给你新的体验 - BMO~BMO!</title>
 
 
   <link rel="shortcut icon" href="/images/facivon.jpeg">
@@ -111,125 +111,80 @@
 
 
   <!-- Main Content -->
-  <div class="site-content home">
-  <main class="content-area">
-    
-      
-        <div class="even">
-          
+  <div class="content-area">
+  <div class="post">
+    <!-- Post Content -->
+    <div class="container">
+      <article>
+        <!-- Title date & tags -->
+        <div class="post-header">
+          <h1 class="entry-title">
+            Kotlin Tips(2) 用递归还是循环？也许Kotlin可以给你新的体验
+            
+          </h1>
+          <p class="posted-on">
+          2019-05-16
+          </p>
+          <div class="tags-links">
+            
+              
+                <a href="/tags/kotlin/" rel="tag">
+                  kotlin
+                </a>
+              
+            
+          </div>
+        </div>
+        <!-- Post Main Content -->
+        <div class="entry-content has_line_number">
+          <p> ### 递归OR循环 当编写一个涉及递归调用的方法时，你是否遇到过这样的烦恼，用递归的话更容易理解整个方法所表达的含义和流程，但是为了去避免出现过多的递归调用导致StackOverFlow，你不得不放弃使用递归，默默地将代码修改为循环的形式。</p>
+<p>那么，有没有可能让我的代码保持递归的形式但是执行的过程却是循环的方式呢，是不是觉得这个想法有点天真，但是Kotlin的使用者是可能有这个运气能实现的。</p>
+<h3 id="tailrec"><a href="#tailrec" class="headerlink" title="tailrec"></a>tailrec</h3><p>一切要从优化<a href="https://github.com/wuseal/JsonToKotlinClass" target="_blank" rel="noopener"><code>JsonToKotlinClass</code></a> 的代码说起，这代码的某个类中，发现了不少的递归调用，如下：<br><img src="/2019/05/16/kotlin-tailrec-md/tailrec1" alt=""></p>
+<p>然后突然脑子里飘过三个字”尾递归”，尾递归就是如果一个函数中所有递归形式的调用都出现在函数的末尾，我们称这个递归函数是尾递归的。而尾递归优化就是针对尾递归的情况，通过编译时自动转换成循环去消除递归，从而既保留了代码的递归可读性又解决了栈空间的问题。介于之前我是知道JAVA是不支持尾递归优化的，所以我开始查找Kotlin是否有尾递归的优化。</p>
+<p>很容易在官方文档找到尾递归优化的关键字：<code>tailrec</code> </p>
+<blockquote>
+<p>tailrec marks a function as tail-recursive (allowing the compiler to replace recursion with iteration)</p>
+</blockquote>
+<h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><p>于是我开始了实验， 通过对kotlin代码的字节码DEcompile查看是否达到了尾递归的优化。<br><img src="/2019/05/16/kotlin-tailrec-md/tailrec2" alt=""><br><img src="/2019/05/16/kotlin-tailrec-md/tailrec3" alt=""><br>通过对比，不难发现tailrec的的确确做到了JAVA做不到的事情。</p>
 
-<!-- 首页模板 -->
-<div class="container">
-  <article class="post">
-    
-      
-      
-
-      <a href="/2019/05/16/kotlin-tailrec-md/">
-          <img src="/-img/2019/kotlin-course-image.png" alt="Kotlin Tips(2) 用递归还是循环？也许Kotlin可以给你新的体验" class="attachment-post-thumbnail">
-        </a>
-    
-    <h1 class="entry-title">
-      <a href="/2019/05/16/kotlin-tailrec-md/" rel="bookmark">
-        Kotlin Tips(2) 用递归还是循环？也许Kotlin可以给你新的体验
-      </a>
-    </h1>
-    
-
-    <p class="posted-on">
-    2019-05-16
-    </p>
-    <div class="tags-links">
-      
-      <a href="/tags/kotlin/" rel="tag">
-        kotlin
-      </a>
-      
+        </div>
+      </article>
     </div>
-  </article>
-</div>
-        </div> 
+    <!-- Comments -->
+    <div class="container">
       
-    
-      
-        <div class="odd">
-          
+<section id="comment">
+  <!-- <h1 class="title">Comments</h1> -->
 
-<!-- 首页模板 -->
-<div class="container">
-  <article class="post">
-    
-    <h1 class="entry-title">
-      <a href="/2019/04/17/kotlin-readText-method/" rel="bookmark">
-        Kotlin Tips(1)	Kotlin的readText()方法会自动关闭IO流吗？
-      </a>
-    </h1>
-    
-    <div class="entry-content">
-      <p>
-        </p><h3 id="readText-方法介绍"><a href="#readText-方法介绍" class="headerlink" title="readText()方法介绍"></a>readText()方法介绍</h3><p><code>readText()</code>是kotlin为一些IO操作类提供的拓展方法,方便读取IO内容<br>常见使用:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val contents = File(&quot;pathname&quot;).readText()</span><br><span class="line">val contents = URL(&quot;url&quot;).readText()</span><br></pre></td></tr></table></figure>
-      <p></p>
-    </div>
-    
+  
+  <div id="disqus_thread">
+    <script type="text/javascript">
+    var disqus_config = function () {
+          this.page.url = window.location.href;
+          this.page.identifier = 'post-kotlin-tailrec-md';
+          this.page.title = 'Kotlin Tips(2) 用递归还是循环？也许Kotlin可以给你新的体验';
+      };
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
 
-    <p class="posted-on">
-    2019-04-17
-    </p>
-    <div class="tags-links">
-      
-      <a href="/tags/kotlin/" rel="tag">
-        kotlin
-      </a>
-      
+
     </div>
-  </article>
-</div>
+    <!-- Pre or Next -->
+    <div class="nav-links">
+      
+      
+        <div class="nav-next">
+          <a href="/2019/04/17/kotlin-readText-method/" rel="prev">Newer Posts <span class="meta-arraw meta-arraw-right"></span></a>
         </div>
       
-    
-      
-        <div class="even">
-          
-
-<!-- 首页模板 -->
-<div class="container">
-  <article class="post">
-    
-      
-      
-
-      <a href="/2019/01/31/hello-world/">
-          <img src="/img/2019/恋爱的犀牛.png" alt="恋爱的犀牛" class="attachment-post-thumbnail">
-        </a>
-    
-    <h1 class="entry-title">
-      <a href="/2019/01/31/hello-world/" rel="bookmark">
-        恋爱的犀牛
-      </a>
-    </h1>
-    
-
-    <p class="posted-on">
-    2019-01-31
-    </p>
-    <div class="tags-links">
-      
-      <a href="/tags/生 活/" rel="tag">
-        生 活
-      </a>
-      
     </div>
-  </article>
-</div>
-        </div> 
-      
-    
 
-    
-
-  </main>
+  </div>
 </div>
+
 
   <!-- Footer -->
   <!-- Footer-widgets -->
@@ -293,12 +248,14 @@
   var disqus_shortname = 'xurui-1';
 
   
+  var disqus_url = 'https://xurui1995.github.io/2019/05/16/kotlin-tailrec-md/';
+  
 
   (function(){
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>
